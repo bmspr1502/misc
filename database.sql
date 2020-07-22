@@ -2,10 +2,10 @@
 -- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Jul 22, 2020 at 04:44 AM
--- Server version: 10.3.22-MariaDB-0+deb10u1
--- PHP Version: 7.3.14-1~deb10u1
+-- Host: 127.0.0.1
+-- Generation Time: Jul 22, 2020 at 08:55 AM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.3.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -47,7 +47,9 @@ INSERT INTO `faculty_papers` (`paper_ID`, `faculty_ID`, `paper-due`, `paper_dura
 (2, 1, '2020-07-01 04:17:00', 40, 30, '[{\\\"questionNumber\\\":\\\"1\\\",\\\"questionText\\\":\\\"fdgdfghfdh\\\"},{\\\"questionNumber\\\":\\\"2\\\",\\\"questionText\\\":\\\"gfhjgkjhliuo\\\"},{\\\"questionNumber\\\":\\\"3\\\",\\\"questionText\\\":\\\"hjklhjuk;liop\\\'\\\"}]', 0),
 (3, 1, '2020-07-01 04:32:00', 50, 50, '[{\\\"questionNumber\\\":\\\"1\\\",\\\"questionText\\\":\\\"yhertytryu\\\"},{\\\"questionNumber\\\":\\\"2\\\",\\\"questionText\\\":\\\"jytiuytiuyol\\\"}]', 1),
 (4, 2, '2020-07-16 04:32:00', 70, 50, '[{\\\"questionNumber\\\":\\\"1\\\",\\\"questionText\\\":\\\"yhertytryu\\\"},{\\\"questionNumber\\\":\\\"2\\\",\\\"questionText\\\":\\\"jytiuytiuyol\\\"},{\\\"questionNumber\\\":\\\"3\\\",\\\"questionText\\\":\\\"jhgkgjhklhj\\\"},{\\\"questionNumber\\\":\\\"4\\\",\\\"questionText\\\":\\\"dyjuytikyuiou\\\"}]', 2),
-(5, 1, '2020-07-01 04:39:00', 53, 563, '[{\\\"questionNumber\\\":\\\"1\\\",\\\"questionText\\\":\\\"ktfiytu\\\"},{\\\"questionNumber\\\":\\\"2\\\",\\\"questionText\\\":\\\"yuytiuyti\\\"},{\\\"questionNumber\\\":\\\"3\\\",\\\"questionText\\\":\\\"tyutryeurtu\\\"}]', 0);
+(5, 1, '2020-07-01 04:39:00', 53, 563, '[{\\\"questionNumber\\\":\\\"1\\\",\\\"questionText\\\":\\\"ktfiytu\\\"},{\\\"questionNumber\\\":\\\"2\\\",\\\"questionText\\\":\\\"yuytiuyti\\\"},{\\\"questionNumber\\\":\\\"3\\\",\\\"questionText\\\":\\\"tyutryeurtu\\\"}]', 0),
+(6, 1, '2020-07-23 05:56:00', 5, 10, '[{\\\"questionNumber\\\":\\\"1\\\",\\\"questionText\\\":\\\"Just checking\\\"},{\\\"questionNumber\\\":\\\"2\\\",\\\"questionText\\\":\\\"These are all the values that will be added\\\"}]', 0),
+(7, 1, '2020-07-24 06:05:00', 20, 200, '[{\\\"questionNumber\\\":\\\"1\\\",\\\"questionText\\\":\\\"Whatever the question is\\\"},{\\\"questionNumber\\\":\\\"2\\\",\\\"questionText\\\":\\\"write the data into it\\\"}]', 0);
 
 --
 -- Indexes for dumped tables
@@ -67,7 +69,7 @@ ALTER TABLE `faculty_papers`
 -- AUTO_INCREMENT for table `faculty_papers`
 --
 ALTER TABLE `faculty_papers`
-  MODIFY `paper_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'A unique ID assigned to the paper', AUTO_INCREMENT=6;
+  MODIFY `paper_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'A unique ID assigned to the paper', AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

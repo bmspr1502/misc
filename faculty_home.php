@@ -1,6 +1,7 @@
 <?php
 session_start();
-//login check -- needs to be reviewed by person wrinting login
+//login check -- needs to be reviewed by person writing login
+
 if(isset($_SESSION["auth"])){
     $_SESSION["error"] = "not logged in";
     header("Location: login.php");
