@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once 'browser_check.php';
 //login check -- needs to be reviewed by person writing login
 
 if(isset($_SESSION["user_type"])){
@@ -44,6 +45,7 @@ $query->close();
         </div>
         <ul class="list-group list-group flush">
         <?php
+        //showing of the papers
         foreach($all_papers as $paper){
             $ID = $paper[0];
             $marks = $paper[4];

@@ -1,12 +1,10 @@
 <?php
 session_start();
-//login check -- needs to be reviewed by person wrinting login
-if(isset($_SESSION["auth"])){
-    $_SESSION["error"] = "not logged in";
-    header("Location: login.php");
-}
-//**********!!!!!!!!!!!!!!!!! 
-//person handling login needs to pass it here
+include_once 'browser_check.php';
+//login -check
+if(isset($_SESSION["user_type"])){
+if($_SESSION["user_type"] == 'faculty'){
+
 $facultyID = $_SESSION["facultyID"];
 setcookie("facultyID","".$facultyID);
 ?>
@@ -149,3 +147,9 @@ setcookie("facultyID","".$facultyID);
         </script>
     </body>
 </html>
+    <?php
+}
+} else{
+    echo 'Not Signed in';
+    header("Location: faculty_login.php");
+}

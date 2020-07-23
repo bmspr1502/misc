@@ -1,7 +1,7 @@
 <?php
 session_start();
-
-
+include_once 'browser_check.php';
+//login check
 if(isset($_SESSION["user_type"])){
    if($_SESSION["user_type"] == 'faculty'){
 

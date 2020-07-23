@@ -1,6 +1,7 @@
 <?php
 $id = $_GET['id'];
-//echo "id = " . $id . '<br>';
+
+include_once 'browser_check.php';
 session_start();
 
 //login check -- needs to be reviewed by person writing login

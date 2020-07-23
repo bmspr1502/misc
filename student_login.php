@@ -1,5 +1,7 @@
 <?php
 session_start();
+include_once 'browser_check.php';
+//if already logged in, then goes to the respective page automatically
 if(isset($_SESSION['user_type'])){
     if($_SESSION['user_type'] == 'faculty'){
         header("Location: faculty_home.php");
@@ -40,7 +42,6 @@ if(isset($_SESSION['user_type'])){
     <?php
     if(isset($_POST['signin'])){
         include 'DB.php';
-//for active papers
         $query= $mysqli->prepare("SELECT * FROM `student_list`");
         $query->execute();
         $list = $query->get_result();

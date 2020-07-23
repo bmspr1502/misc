@@ -1,5 +1,7 @@
 <?php
 session_start();
+include_once 'browser_check.php';
+//if already logged in, then goes to the respective page automatically
 if(isset($_SESSION['user_type'])){
     if($_SESSION['user_type'] == 'faculty'){
         header("Location: faculty_home.php");

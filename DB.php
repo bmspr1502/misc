@@ -1,8 +1,8 @@
 <?php
 //db parameters
 $SERVER = 'localhost';
-$USERNAME = 'exam';
-$PASSWORD = 'exam123';
+$USERNAME = 'root';
+$PASSWORD = '';
 $DB = 'exam_app_db';
 
 date_default_timezone_set('Asia/Kolkata');
