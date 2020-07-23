@@ -5,10 +5,8 @@ session_start();
 
 //login check -- needs to be reviewed by person writing login
 
-if(isset($_SESSION["auth"])){
-    $_SESSION["error"] = "not logged in";
-    header("Location: login.php");
-}
+if(isset($_SESSION["user_type"])){
+if($_SESSION["user_type"] == 'student'){
 
 include 'DB.php';
 
@@ -118,3 +116,9 @@ foreach ($quiz_row as $item) {
 </script>
 </body>
 </html>
+<?php
+}
+} else{
+    echo 'Not Signed in';
+    header("Location: student_login.php");
+}
