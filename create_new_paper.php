@@ -8,7 +8,6 @@ if(isset($_SESSION["auth"])){
 //**********!!!!!!!!!!!!!!!!! 
 //person handling login needs to pass it here
 $facultyID = $_SESSION["facultyID"];
-$facultyID = 1; //remove in production
 setcookie("facultyID","".$facultyID);
 ?>
 <!doctype html>

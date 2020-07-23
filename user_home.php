@@ -2,10 +2,8 @@
 session_start();
 //login check -- needs to be reviewed by person writing login
 
-if(isset($_SESSION["auth"])){
-    $_SESSION["error"] = "not logged in";
-    header("Location: login.php");
-}
+if(isset($_SESSION["user_type"])){
+    if($_SESSION["user_type"] == 'student'){
 
 include 'DB.php';
 
@@ -27,6 +25,15 @@ $query->close();
 <body>
 <header class="container-fluid header-base">
     <h2 style="text-align: center">User Dashboard</h2>
+    <form action="user_home.php" method="post">
+        <input type="submit" value="sign out" name="signout">
+        <?php
+        if(isset($_POST['signout'])){
+            unset($_SESSION['user_type']);
+            header("Location: student_login.php");
+        }
+        ?>
+    </form>
 </header>
 
 <div class="container">
@@ -61,3 +68,9 @@ $query->close();
 </div>
 </body>
 </html>
+<?php
+}
+} else{
+    echo 'Not Signed in';
+    header("Location: student_login.php");
+}
