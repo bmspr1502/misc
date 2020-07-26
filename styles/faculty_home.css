@@ -1,5 +1,5 @@
 body{
-    background-color: #f5f5f5;
+    background-color: #2C353C;
 }
 
 a{
@@ -20,8 +20,10 @@ a:visited{
 }
 
 .header-base{
-    background-color: blue;
-    height: 50px;
+    background-color: rgba(0,0,0,0.3);
+    padding-top: 15px;
+    padding-bottom: 15px;
+    width: 100%;
 }
 
 
@@ -36,16 +38,25 @@ a:visited{
 
 .section-title{
     font-size: 25px;
-    color: #575757;
+    color: #ffffff;
     padding-bottom: 15px;
 }
 
 .pap{
-    background-color: rgb(192, 192, 192)!important;
+    background-color: rgb(74, 82, 92)!important;
+    color: #ffffff;
+    font-size: 25px;
+    transition: all 0.4s;
+}
+.pap:hover{
+    background-color: #ffffff!important;
+    color:rgb(74, 82, 92);
+    box-shadow: 2px 2px 8px rgba(0,0,0,0);
+    transition: all 0.4s;
 }
 
 .paper{
-    background-color: rgb(217, 226, 230);
+    background-color: rgb(255, 255, 255);
     max-height: 150px;
     width: 300px;
     border-radius: 5px;
@@ -58,15 +69,16 @@ a:visited{
     white-space: normal;
 }
 
+.paper:hover{
+    background-color: #b4b4b4!important;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0);
+    font-size: 23px!important;
+    transition: all 0.4s;
+}
+
 .action{
     font-size: 25px;
     color: rgb(92, 92, 92);
-}
-
-.paper:hover{
-    background-color: white;
-    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-    transition: all 0.4s;
 }
 
 .paper-params{
@@ -76,12 +88,14 @@ a:visited{
 .form-group{
     margin-right: 0%;
     margin-left: 0%;
+    color: #ffffff;
     transition: all 0.4s;
 }
 
 .aa{
     margin-right: 0%!important;
     margin-left: 0%!important;
+    color: #2C353C!important;
     transition: all 0.4s;
 }
 
@@ -131,4 +145,26 @@ a:visited{
 
 p{
     margin-bottom: 0!important;
+}
+
+
+.top-title{
+    color: white;
+}
+
+.q-title{
+    color: #b4b4b4;
+}
+
+.add-to{
+    color: #2C353C;
+    padding-right: 10px;
+}
+
+.butsec{
+    padding-top: 15px;
+}
+
+.act{
+    background-color: #42a1b4!important;
 }

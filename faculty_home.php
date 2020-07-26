@@ -39,21 +39,29 @@ $query->close();
         <title>Faculty Home</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
         <link rel="stylesheet" href="styles/faculty_home.css">
+        <link rel="stylesheet" href="styles/general.css">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
 
     <body>
-        <header class="container-fluid header-base">
-            <div class="text-right">
-                <form action="faculty_home.php" method="post">
-                    <input type="submit" value="sign out" name="signout">
-                    <?php
-                    if(isset($_POST['signout'])){
-                        unset($_SESSION['user_type']);
-                        header("Location: faculty_login.php");
-                    }
-                    ?>
-                </form>
+        <header class="container-fluid header-base row">
+            <div class="col-md-6">
+                <div class="text-left">
+                    <h3 class="top-title">Faculty Portal</h3>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="text-right">
+                    <form action="faculty_home.php" method="post">
+                        <input type="submit" class="btn btn-secondary top-but" value="Sign Out" name="signout">
+                        <?php
+                        if(isset($_POST['signout'])){
+                            unset($_SESSION['user_type']);
+                            header("Location: faculty_login.php");
+                        }
+                        ?>
+                    </form>
+                </div>
             </div>
         </header>
 
@@ -65,7 +73,7 @@ $query->close();
                 </div>
                 <a href="create_new_paper.php">
                     <div class="paper pap text-center">
-                        <div class="action">Create New</div>
+                        <div class="">Create New</div>
                     </div>
                 </a>
 

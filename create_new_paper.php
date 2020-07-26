@@ -24,8 +24,26 @@ setcookie("facultyID","".$facultyID);
     </head>
 
     <body>
-        <header class="container-fluid header-base">
-        </header>
+        <header class="container-fluid header-base row">
+                <div class="col-md-6">
+                    <div class="text-left">
+                        <a href="faculty_home.php"><h3 class="top-title">Faculty Portal</h3></a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-right">
+                        <form action="faculty_home.php" method="post">
+                            <input type="submit" class="btn btn-secondary top-but" value="Sign Out" name="signout">
+                            <?php
+                            if(isset($_POST['signout'])){
+                                unset($_SESSION['user_type']);
+                                header("Location: faculty_login.php");
+                            }
+                            ?>
+                        </form>
+                    </div>
+                </div>
+            </header>
 
         <div class="container">
             <form id="paper-meta" action="faculty-submit-paper.php" method="post">
@@ -51,9 +69,15 @@ setcookie("facultyID","".$facultyID);
             <!--question creator-->
             <div class="container creator">
                 <div class="form-group aa">
-                        <label for="question">Question</label>
                         <textarea class="form-control" name="question" id="paper-question" placeholder="Enter your question"></textarea>
+                        <div class="text-left butsec">
+                            <span class="add-to">Adding to </span>
+                            <button type="button" id="A" class="btn btn-secondary act" onclick="section('A')">Section A</button>
+                            <button type="button" id="B" class="btn btn-secondary" onclick="section('B')">Section B</button>
+                            <button type="button" id="C" class="btn btn-secondary" onclick="section('C')">Section C</button>
+                        </div>
                 </div>
+
                 <div class="form-group b">
                     <button type="button" class="btn btn-secondary" onclick=sub()>Submit paper</button>
                     <button type="button" class="btn btn-primary paper-add" onclick=addQ()>Add question</button>
@@ -61,14 +85,38 @@ setcookie("facultyID","".$facultyID);
             </div>
 
             <!--created questions-->
-            <div class="container text-center" id="questions">
+            <div class="container text-center q-title" id="questions">
                 <h3>Questions</h3>
             </div>
         </div>
         <script type="text/javascript">
-            var questions = [];
+            var questionsA = [];
+            var questionsB = [];
+            var questionsC = [];
+            var questions = [questionsA,questionsB,questionsC];
             var count = 0;
-            var prevText
+            var prevText;
+            var currentSection = 0;
+            function section(val){
+                if(val === 'A'){
+                    currentSection = 0;
+                    $("#A").addClass("act");
+                    $("#B").removeClass("act");
+                    $("#C").removeClass("act");
+                } else if(val === 'B'){
+                    currentSection = 1;
+                    $("#B").addClass("act");
+                    $("#A").removeClass("act");
+                    $("#C").removeClass("act");
+                } else if(val === 'C'){
+                    currentSection = 2;
+                    $("#C").addClass("act");
+                    $("#A").removeClass("act");
+                    $("#B").removeClass("act");
+                }
+
+            }
+
             var questionsDiv = document.getElementById("questions");
             function addQ(){
                 var text = $("#paper-question").val();
@@ -78,14 +126,13 @@ setcookie("facultyID","".$facultyID);
                 }
                 count++;
                 var question = {questionNumber:count.toString(),questionText:text};
-                questions.push(question);
+                questions[currentSection].push(question);
                 prevText = text;
                 console.log(JSON.stringify(questions))
                 $("#paper-question").val("").focus();
 
 
                 var card = '<div class="container text-left question"><p class="t"><span class="qnum">' + count + '</span>' + text + '</p></div>';
-                console.log(card);
                 questionsDiv.innerHTML += card;
             }
 
