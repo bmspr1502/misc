@@ -36,3 +36,12 @@
 .ex-but{
     margin-top: 10px;
 }
+
+hr{
+    border: 1px solid #838383!important;
+}
+
+.timer-container{
+    color: #ffffff;
+    font-size: 20px;
+}

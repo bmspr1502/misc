@@ -1,13 +1,6 @@
 <?php
+session_destroy();
 session_start();
-if(isset($_SESSION['user_type'])){
-    if($_SESSION['user_type'] == 'faculty'){
-        header("Location: faculty_home.php");
-    } else if($_SESSION['user_type'] == 'student'){
-        header("Location: user_home.php");
-    }
-}
-
 
 ?>
 <!doctype html>
@@ -56,7 +49,8 @@ if(isset($_SESSION['user_type'])){
     </div>
 
     <?php
-    if(isset($_POST['signin'])){
+    echo "fghfh";
+        echo "fgfdh";
         include 'DB.php';
 //for active papers
         $query= $mysqli->prepare("SELECT * FROM `student_list`");
@@ -65,21 +59,23 @@ if(isset($_SESSION['user_type'])){
         $list = $list->fetch_all();
         $query->close();
 
+        print_r($list);
+        var_dump($_POST);
+
         $found = false;
         foreach ($list as $user){
             if(($user[2]==$_POST['email']) && ($user[3]==$_POST['password'])){
                 $_SESSION['user_type'] = 'student';
-                echo 'Login Successful';
                 header("Location: user_home.php");
+                echo "match_found";
                 $found = true;
                 break;
             }
         }
 
         if($found == false){
-            echo 'user not found';
+            echo 'Invalid Email or Password';
         }
-    }
     ?>
 </div>
 </body>

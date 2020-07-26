@@ -36,13 +36,15 @@ $query->close();
                 </div>
                 <div class="col-md-6">
                     <div class="text-right">
-                        <form action="faculty_home.php" method="post">
+                        <form action="student_login.php" method="post">
                             <input type="submit" class="btn btn-secondary top-but" value="Sign Out" name="signout">
                             <?php
                             if(isset($_POST['signout'])){
                                 unset($_SESSION['user_type']);
                                 header("Location: student_login.php");
                             }
+                            unset($_SESSION['user_type']);
+                            header("Location: student_login.php");
                             ?>
                         </form>
                     </div>
