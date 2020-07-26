@@ -16,9 +16,25 @@ if(isset($_SESSION['user_type'])){
     <title>Faculty Login</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="styles/faculty_login.css">
+    <link rel="stylesheet" href="styles/faculty_home.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
+
+        <header class="container-fluid header-base row">
+            <div class="col-md-6">
+                <div class="text-left">
+                    <h3 class="top-title">Student Login</h3>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="text-right">
+                    <form action="index.php" method="post">
+                        <input type="submit" class="btn btn-secondary top-but" value="Back Home">
+                    </form>
+                </div>
+            </div>
+        </header>
 
 <div class="container">
     <div class="container loginItem">

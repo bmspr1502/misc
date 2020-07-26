@@ -1,0 +1,38 @@
+.card-header{
+    color: #ffffff;
+    font-size: 25px;
+    border: none!important;
+}
+
+.student_paper{
+    background-color: #cac9c9;
+    padding: 10px;
+    margin: 15px;
+    border-radius: 5px;
+    color: #3f3f3f;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    transition: all 0.4s;
+}
+
+.student_paper:hover{
+    background-color: #ffffff;
+    margin-left: 5px;
+    margin-right: 5px;
+    color: #2C353C;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0);
+    transition: all 0.4s;
+}
+
+.main-section{
+    margin-top: 50px;
+}
+
+.info-group-2{
+    font-size: 22px;
+    margin-top: 5px;
+    color: rgb(41, 77, 94);
+}
+
+.ex-but{
+    margin-top: 10px;
+}
