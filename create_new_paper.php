@@ -8,6 +8,7 @@ if(isset($_SESSION["auth"])){
 //**********!!!!!!!!!!!!!!!!! 
 //person handling login needs to pass it here
 $facultyID = $_SESSION["facultyID"];
+$facultyID = 1;
 setcookie("facultyID","".$facultyID);
 ?>
 <!doctype html>
@@ -75,6 +76,12 @@ setcookie("facultyID","".$facultyID);
                             <button type="button" id="A" class="btn btn-secondary act" onclick="section('A')">Section A</button>
                             <button type="button" id="B" class="btn btn-secondary" onclick="section('B')">Section B</button>
                             <button type="button" id="C" class="btn btn-secondary" onclick="section('C')">Section C</button>
+
+                            <span class="text-right">
+                                <p><input type="file"  accept="image/*" name="image" id="file"  onchange="loadFile(event)" style="display: none;"></p>
+                                <p><label for="file" style="cursor: pointer;">Upload Image</label></p>
+                                <p><img id="output" width="200" /></p>
+                            </span>
                         </div>
                 </div>
 
@@ -87,6 +94,15 @@ setcookie("facultyID","".$facultyID);
             <!--created questions-->
             <div class="container text-center q-title" id="questions">
                 <h3>Questions</h3>
+                <div class="qes text-center">
+                    <h4 id="secA">Section A</h4>
+                </div>
+                <div class="qes text-center">
+                    <h4 id="secB">Section B</h4>
+                </div>
+                <div class="qes text-center">
+                    <h4 id="secC">Section C</h4>
+                </div>
             </div>
         </div>
         <script type="text/javascript">
@@ -117,7 +133,10 @@ setcookie("facultyID","".$facultyID);
 
             }
 
+            var isImage = false;
             var questionsDiv = document.getElementById("questions");
+            var sections = [document.getElementById("secA"),document.getElementById("secB"),document.getElementById("secC")];
+            //function to add a question to the list
             function addQ(){
                 var text = $("#paper-question").val();
                 if($.trim(text) == ""){
@@ -125,16 +144,59 @@ setcookie("facultyID","".$facultyID);
                     return;
                 }
                 count++;
-                var question = {questionNumber:count.toString(),questionText:text};
+                var imageURL = "";
+                if(isImage){
+                    //means there is an image                    
+                    var blobFile = $('#file')[0].files[0];
+                    var formData = new FormData();
+                    formData.append("file", blobFile);
+                    $.ajaxSetup({async: false});
+                    $.ajax({
+                        url: "uploadQImages.php",
+                        type: "POST",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            if(response === "typeerror"){
+                                alert("Please upload a .jpg or .png or .jpeg only.")
+                            } else if(response === "uploaderror"){
+                                alert("There was an error uploading your file. Please try later");
+                            } else {
+                                imageURL = response;
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorMessage) {
+                            alert("Error uploading file. Please try later"); 
+                        }
+                    });
+                }
+
+                //this way each question is added with an image fiel but only some of them will have data in the field
+                var question = {questionNumber:count.toString(),questionText:text,image:imageURL};
                 questions[currentSection].push(question);
                 prevText = text;
                 console.log(JSON.stringify(questions))
                 $("#paper-question").val("").focus();
+                $("#file").val("");
+                $('#output').attr("src", "");
 
+                //display image in card
+                var card = '<div class="container text-left question"><p class="t"><span class="qnum">' + count + '</span>' + text + '</p>'
+                var image = '<div><img class="qcard-img" width="200" src='+imageURL+'></div>';
+                var cardEnd = '</div>';
+                card = card + image + cardEnd;
+                sections[currentSection].innerHTML += card;
 
-                var card = '<div class="container text-left question"><p class="t"><span class="qnum">' + count + '</span>' + text + '</p></div>';
-                questionsDiv.innerHTML += card;
+                isImage = false;
+
             }
+
+            var loadFile = function(event) {
+	            var image = document.getElementById('output');
+                image.src = URL.createObjectURL(event.target.files[0]);
+                isImage = true;
+            };
 
             $("#paper-meta").submit(function(event){
                 sub();
@@ -160,6 +222,8 @@ setcookie("facultyID","".$facultyID);
                 // Return null if not found
                 return null;
             }
+
+
 
 
             function sub(){
