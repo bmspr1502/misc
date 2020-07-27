@@ -1,9 +1,12 @@
 <?php
 session_start();
-//login check -- needs to be reviewed by person writing login
-
-if(isset($_SESSION["user_type"])){
-    if($_SESSION["user_type"] == 'student'){
+//login check
+if(!(isset($_SESSION["auth"]) && isset($_SESSION["user_type"]) && isset($_SESSION["user_ID"]) && ($_SESSION["auth"]==session_id()))){
+    //not logged in
+    session_destroy();
+    header("Location: student_login.php");
+    die();
+} 
 
 include 'DB.php';
 //need to perform check to see if student's enrolled courses matched this paricular paper
@@ -38,14 +41,6 @@ $query->close();
                     <div class="text-right">
                         <form action="student_login.php" method="post">
                             <input type="submit" class="btn btn-secondary top-but" value="Sign Out" name="signout">
-                            <?php
-                            if(isset($_POST['signout'])){
-                                unset($_SESSION['user_type']);
-                                header("Location: student_login.php");
-                            }
-                            unset($_SESSION['user_type']);
-                            header("Location: student_login.php");
-                            ?>
                         </form>
                     </div>
                 </div>
@@ -69,7 +64,7 @@ $query->close();
                         echo '<div class="col-md-4 text-left">';
                             echo '<div class="info-group">Paper ID: '.$ID.'</div>';
                             echo '<div class="info-group">Maximum Marks: '.$marks.'</div>';
-                            echo '<div class="info-group">Total Time: '.$marks.' minutes</div>';
+                            echo '<div class="info-group">Total Time: '.$time.' minutes</div>';
                             echo '<div class="info-group">
                                 <a href="quiz.php?id=' . $ID . '">
                                     <input type="button" class="btn btn-primary ex-but" value="Take Exam">
@@ -89,10 +84,3 @@ $query->close();
     </body>
 </html>
 
-<?php
-    }   
-} else{
-    echo 'Not Signed in';
-    header("Location: student_login.php");
-}
-?>

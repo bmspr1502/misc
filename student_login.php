@@ -1,8 +1,15 @@
 <?php
-session_destroy();
 session_start();
-
+if(isset($_SESSION["auth"])){
+    if($_SESSION["auth"] == "error"){ 
+        $text = "Invalid user or password";
+    } else if($_SESSION["auth"] == session_id()){
+        $text = "Signed out successfully";
+    }
+}
+session_destroy();
 ?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -32,7 +39,7 @@ session_start();
 <div class="container">
 
     <div class="container loginItem">
-        <form action="student_login.php" method="post">
+        <form action="student_auth.php" method="post">
             <div class="form-group">
                 <label class="" for="email">Username or Email</label>
                 <input type="text" class="form-control" name='email' placeholder="Enter email" id="email" autocomplete="off">
@@ -49,8 +56,8 @@ session_start();
     </div>
 
     <?php
-    echo "fghfh";
-        echo "fgfdh";
+    /*
+    if(isset($_POST['signin'])){
         include 'DB.php';
 //for active papers
         $query= $mysqli->prepare("SELECT * FROM `student_list`");
@@ -59,23 +66,22 @@ session_start();
         $list = $list->fetch_all();
         $query->close();
 
-        print_r($list);
-        var_dump($_POST);
-
         $found = false;
         foreach ($list as $user){
             if(($user[2]==$_POST['email']) && ($user[3]==$_POST['password'])){
                 $_SESSION['user_type'] = 'student';
+                echo 'Login Successful';
                 header("Location: user_home.php");
-                echo "match_found";
                 $found = true;
                 break;
             }
         }
 
         if($found == false){
-            echo 'Invalid Email or Password';
+            echo 'user not found';
         }
+    }
+    */
     ?>
 </div>
 </body>

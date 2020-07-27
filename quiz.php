@@ -1,14 +1,19 @@
 <?php
+//paper ID
 $id = $_GET['id'];
 //echo "id = " . $id . '<br>';
+
 session_start();
-
-//login check -- needs to be reviewed by person writing login
-
-if(isset($_SESSION["user_type"])){
-if($_SESSION["user_type"] == 'student'){
+//login check
+if(!(isset($_SESSION["auth"]) && isset($_SESSION["user_type"]) && isset($_SESSION["user_ID"]) && ($_SESSION["auth"]==session_id()))){
+    //not logged in
+    session_destroy();
+    header("Location: student_login.php");
+    die();
+} 
 
 include 'DB.php';
+
 
 $query= $mysqli->prepare("SELECT * FROM `faculty_papers` WHERE `paper_id`=".$id);
 $query->execute();
@@ -16,12 +21,10 @@ $quiz_row = $query->get_result();
 $quiz_row = $quiz_row->fetch_all();
 $query->close();
 
-print_r($quiz_row);
 
-foreach ($quiz_row as $item) {
-    $questions = json_decode(stripslashes($item[5]), true);
-    $_SESSION['questions'] = $questions;
-}
+$questions = $quiz_row[0][5];
+$questions = json_decode(stripslashes($questions));
+
 
 ?>
 <!doctype html>
@@ -71,35 +74,148 @@ foreach ($quiz_row as $item) {
             </div>
         </header>
 
-        <div class="container questions-container current-q" id="questionsA">
+        <div class="container questions-container current-q text-center" id="questionsA">
+            <h2 class="tit">Section A</h2>
+            <?php
+                $questionsA = $questions[0];
+                shuffle($questionsA);
+                foreach($questionsA as $questionObj){
+                    if($questionObj->image){
+                       $image = '<div><img class="qcard-img" width="400" src='.$questionObj->image.'></div>'; 
+                    } else {
+                        $image = "";
+                    }
+                    echo '
+                        <div class="container text-left student_question_card">
+                            <p class="t"><span class="qnum">'.$questionObj->questionNumber.'</span>'.$questionObj->questionText.'</p>
+                            '.$image.'
+                        </div>
+                    ';
+                }
+            ?>
         </div>
 
-        <div class="container questions-container" id="questionsB">
+        <div class="container questions-container text-center" id="questionsB">
+            <h2 class="tit">Section B</h2>
+            <?php
+                $questionsB = $questions[1];
+                shuffle($questionsB);
+                foreach($questionsB as $questionObj){
+                    if($questionObj->image){
+                        $image = '<div><img class="qcard-img" width="400" src='.$questionObj->image.'></div>'; 
+                    } else {
+                        $image = "";
+                    }
+                    echo '
+                        <div class="container text-left student_question_card">
+                            <p class="t"><span class="qnum">'.$questionObj->questionNumber.'</span>'.$questionObj->questionText.'</p>
+                            '.$image.'
+                        </div>
+                    ';
+                }
+            ?>
         </div>
 
-        <div class="container questions-container" id="questionsC">
+        <div class="container questions-container text-center" id="questionsC">
+            <h2 class="tit">Section C</h2>
+            <?php
+                $questionsC = $questions[2];
+                shuffle($questionsC);
+                foreach($questionsC as $questionObj){
+                    if($questionObj->image){
+                        $image = '<div><img class="qcard-img" width="400" src='.$questionObj->image.'></div>'; 
+                    } else {
+                        $image = "";
+                    }
+                    echo '
+                        <div class="container text-left student_question_card">
+                            <p class="t"><span class="qnum">'.$questionObj->questionNumber.'</span>'.$questionObj->questionText.'</p>
+                            '.$image.'
+                        </div>
+                    ';
+                }
+            ?>
+        </div>
+            
+        <p>
+            <form action="submit_answer.php" method="post" id="answer_form">
+                <input type="file"  accept=".pdf" name="answer" id="file" onchange="loadFile(event)" style="display: none;">
+            </form>
+        </p>
+        <div class="text-center upload-btn">
+            <div id="uploaded-file"></div>
+            <button class="btn btn-primary btn-lg" type="button" id="the_button" onclick="answer_button()">
+                Upload Answer
+            </button>
         </div>
 
         <script type="text/javascript">
+
+            var isValidFileUploaded = false;
+            function loadFile(event){
+                var sub_button = $("#the_button");
+                if(event.target.files[0].type != "application/pdf"){
+                    $("#file").val("");
+                    sub_button.html("Upload Answer");
+                    sub_button.removeClass("submit-button");
+                    alert("Please upload a pdf file");
+                } else {
+                    console.log("success");
+                    sub_button.html("Submit Answer");
+                    sub_button.addClass("submit-button");
+                    $("#uploaded-file").html(event.target.files[0].name);
+                    $("#uploaded-file").addClass("file-text-end");
+                    isValidFileUploaded = true;
+                } 
+            }
+
+            function answer_button(){
+                if(!isValidFileUploaded){
+                    $("#file").click();
+                } else {
+                    $("#answer_form").submit();
+                }
+            }
 
 
             var currentSection = 0;
             function section(val){
                 if(val === 'A'){
                     currentSection = 0;
+                    //handle the buttons
                     $("#A").addClass("act");
                     $("#B").removeClass("act");
                     $("#C").removeClass("act");
+                    
+                    //handle content
+                    $("#questionsA").addClass("current-q");
+                    $("#questionsB").removeClass("current-q");
+                    $("#questionsC").removeClass("current-q");
+
                 } else if(val === 'B'){
                     currentSection = 1;
+                    //handle buttons
                     $("#B").addClass("act");
                     $("#A").removeClass("act");
                     $("#C").removeClass("act");
+
+                    //handle content
+                    $("#questionsB").addClass("current-q");
+                    $("#questionsA").removeClass("current-q");
+                    $("#questionsC").removeClass("current-q");
+
                 } else if(val === 'C'){
                     currentSection = 2;
+                    //handle buttons
                     $("#C").addClass("act");
                     $("#A").removeClass("act");
                     $("#B").removeClass("act");
+
+                    //handle content
+                    $("#questionsC").addClass("current-q");
+                    $("#questionsA").removeClass("current-q");
+                    $("#questionsB").removeClass("current-q");
+
                 }
             }
 
@@ -141,9 +257,3 @@ foreach ($quiz_row as $item) {
 
     </body>
 </html>
-<?php
-}
-} else{
-    echo 'Not Signed in';
-    header("Location: student_login.php");
-}

@@ -45,3 +45,50 @@ hr{
     color: #ffffff;
     font-size: 20px;
 }
+
+.student_question_card{
+    background-color: #ebe8e8;
+    margin-top: 30px;
+    border-radius: 5px;
+    padding: 5px;
+    padding-left: 15px;
+}
+
+.qcard-img{
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.questions-container{
+    display: none;
+    padding-top: 25px;
+}
+
+.current-q{
+    display: block!important;
+}
+
+.tit{
+    color: white;
+}
+
+.upload-btn{
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+    transition: all 0.4s;
+}
+
+.submit-button{
+    background-color: rgb(46, 165, 46)!important;
+    border-color: rgb(46, 165, 46)!important;
+    border: 2;
+    transition: all 0.4s;
+}
+
+#uploaded-file{
+    color: #ffffff;
+    font-size: 20px;
+    margin-bottom: 12px;
+    transition: all 0.4s;
+}

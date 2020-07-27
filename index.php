@@ -1,12 +1,5 @@
 <?php
-session_start();
-if(isset($_SESSION['user_type'])){
-    if($_SESSION['user_type'] == 'faculty'){
-        header("Location: faculty_home.php");
-    } else if($_SESSION['user_type'] == 'student'){
-        header("Location: user_home.php");
-    }
-}
+session_destroy();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +8,7 @@ if(isset($_SESSION['user_type'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Diagoona HTML CSS Template</title>
+    <title>CEG Exam Portal</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet" /> <!-- https://fonts.google.com/ -->
     <link href="css/bootstrap.min.css" rel="stylesheet" /> <!-- https://getbootstrap.com/ -->
     <link href="fontawesome/css/all.min.css" rel="stylesheet" /> <!-- https://fontawesome.com/ -->
