@@ -74,7 +74,7 @@ $questions = json_decode(stripslashes($questions));
             </div>
         </header>
 
-        <div class="container questions-container current-q text-center" id="questionsA">
+        <div class="container questions-container text-center" id="questionsA">
             <h2 class="tit">Section A</h2>
             <?php
                 $questionsA = $questions[0];
@@ -151,6 +151,8 @@ $questions = json_decode(stripslashes($questions));
 
         <script type="text/javascript">
 
+            var isStart = false;
+
             var isValidFileUploaded = false;
             function loadFile(event){
                 var sub_button = $("#the_button");
@@ -173,11 +175,15 @@ $questions = json_decode(stripslashes($questions));
                 if(!isValidFileUploaded){
                     $("#file").click();
                 } else {
-                    $("#answer_form").submit();
+                    if(minutes > 0){
+                        $("#answer_form").submit();
+                    } else {
+                        window.location.replace("user_time_up.php");
+                    }
                 }
             }
 
-
+            var sections = ["A","B","C"];
             var currentSection = 0;
             function section(val){
                 if(val === 'A'){
@@ -188,9 +194,11 @@ $questions = json_decode(stripslashes($questions));
                     $("#C").removeClass("act");
                     
                     //handle content
-                    $("#questionsA").addClass("current-q");
-                    $("#questionsB").removeClass("current-q");
-                    $("#questionsC").removeClass("current-q");
+                    if(isStart){
+                        $("#questionsA").addClass("current-q");
+                        $("#questionsB").removeClass("current-q");
+                        $("#questionsC").removeClass("current-q");
+                    }
 
                 } else if(val === 'B'){
                     currentSection = 1;
@@ -200,9 +208,11 @@ $questions = json_decode(stripslashes($questions));
                     $("#C").removeClass("act");
 
                     //handle content
-                    $("#questionsB").addClass("current-q");
-                    $("#questionsA").removeClass("current-q");
-                    $("#questionsC").removeClass("current-q");
+                    if(isStart){
+                        $("#questionsB").addClass("current-q");
+                        $("#questionsA").removeClass("current-q");
+                        $("#questionsC").removeClass("current-q");
+                    }
 
                 } else if(val === 'C'){
                     currentSection = 2;
@@ -212,9 +222,11 @@ $questions = json_decode(stripslashes($questions));
                     $("#B").removeClass("act");
 
                     //handle content
-                    $("#questionsC").addClass("current-q");
-                    $("#questionsA").removeClass("current-q");
-                    $("#questionsB").removeClass("current-q");
+                    if(isStart){
+                        $("#questionsC").addClass("current-q");
+                        $("#questionsA").removeClass("current-q");
+                        $("#questionsB").removeClass("current-q");
+                    }
 
                 }
             }
@@ -241,16 +253,21 @@ $questions = json_decode(stripslashes($questions));
                 secText.html(secT);
                 minText.html(minutes.toString());
 
+                isStart = true;
+
                 if(minutes <= 0){
                     clearInterval(t);
                     timeUp = true;
                     alert("Time Up");
-                    window.location.replace("user_home.php");
+                    window.location.replace("user_time_up.php");
                 }
             }
 
             function timer() {
                 add();
+                if(isStart){
+                    section(sections[currentSection]);
+                }
                 t = setInterval(add, 1000);
             } 
         </script>
