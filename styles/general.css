@@ -21,3 +21,15 @@
   ::-webkit-scrollbar-thumb:hover {
     background: rgb(122, 121, 121);
   }
+
+  .back-img{
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    left:0;
+    top:0;
+    bottom:0;
+    right:230px;
+    margin:auto;
+    opacity: 0.3;
+  }

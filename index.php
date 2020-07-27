@@ -9,10 +9,11 @@ session_destroy();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CEG Exam Portal</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet" /> <!-- https://fonts.google.com/ -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" /> <!-- https://getbootstrap.com/ -->
-    <link href="fontawesome/css/all.min.css" rel="stylesheet" /> <!-- https://fontawesome.com/ -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" /> 
+    <link href="fontawesome/css/all.min.css" rel="stylesheet" /> 
     <link href="css/templatemo-diagoona.css" rel="stylesheet" />
+    <link href="styles/general.css" rel=stylesheet>
 
 </head>
 
@@ -33,7 +34,20 @@ session_destroy();
             </div>
             
             <div class="tm-row">
-                <div class="tm-col-left"></div>
+                <div class="tm-col-left">
+                    <section class="tm-content">
+                        <h2 class="mb-2 tm-content-title">Instructions for the Student</h2>
+                        <hr class="mb-2">
+                        <ul>
+                            <li><p>Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhgc Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhg </p></li>
+                            <li><p>Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhgc Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhg </p></li>
+                            <li><p>Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhgc Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhg </p></li>
+                            <li><p>Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhgc Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhg </p></li>
+                            <li><p>Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhgc Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhg </p></li>
+                            <li><p>Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhgc Tectsfds jghfd fdghfdhg Tectsfds jghfd fdghfdhg </p></li>
+                        </ul>
+                    </section>
+                </div>
                 <main class="tm-col-right">
                     <section class="tm-content">
                         <h2 class="mb-2 tm-content-title">Student Login</h2>
@@ -58,6 +72,7 @@ session_destroy();
         <!-- Diagonal background design -->
         <div class="tm-bg">
             <div class="tm-bg-left"></div>
+            <img src="logo.png" class="back-img">
             <div class="tm-bg-right"></div>
         </div>
     </div>
