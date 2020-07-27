@@ -2,10 +2,10 @@
 -- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 23, 2020 at 05:46 PM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.3.14
+-- Host: localhost
+-- Generation Time: Jul 27, 2020 at 04:53 PM
+-- Server version: 10.3.22-MariaDB-0+deb10u1
+-- PHP Version: 7.3.14-1~deb10u1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -64,13 +64,7 @@ CREATE TABLE `faculty_papers` (
 --
 
 INSERT INTO `faculty_papers` (`paper_ID`, `faculty_ID`, `paper-due`, `paper_duration`, `total_marks`, `question_data`, `status`) VALUES
-(1, 1, '2020-07-10 05:59:00', 50, 50, '[{\\\"questionNumber\\\":\\\"1\\\",\\\"questionText\\\":\\\"q 1 is the earth flat\\\"},{\\\"questionNumber\\\":\\\"2\\\",\\\"questionText\\\":\\\"is your face flat?\\\"}]', 0),
-(2, 1, '2020-07-01 04:17:00', 40, 30, '[{\\\"questionNumber\\\":\\\"1\\\",\\\"questionText\\\":\\\"fdgdfghfdh\\\"},{\\\"questionNumber\\\":\\\"2\\\",\\\"questionText\\\":\\\"gfhjgkjhliuo\\\"},{\\\"questionNumber\\\":\\\"3\\\",\\\"questionText\\\":\\\"hjklhjuk;liop\\\'\\\"}]', 0),
-(3, 1, '2020-07-01 04:32:00', 50, 50, '[{\\\"questionNumber\\\":\\\"1\\\",\\\"questionText\\\":\\\"yhertytryu\\\"},{\\\"questionNumber\\\":\\\"2\\\",\\\"questionText\\\":\\\"jytiuytiuyol\\\"}]', 1),
-(4, 2, '2020-07-16 04:32:00', 70, 50, '[{\\\"questionNumber\\\":\\\"1\\\",\\\"questionText\\\":\\\"yhertytryu\\\"},{\\\"questionNumber\\\":\\\"2\\\",\\\"questionText\\\":\\\"jytiuytiuyol\\\"},{\\\"questionNumber\\\":\\\"3\\\",\\\"questionText\\\":\\\"jhgkgjhklhj\\\"},{\\\"questionNumber\\\":\\\"4\\\",\\\"questionText\\\":\\\"dyjuytikyuiou\\\"}]', 2),
-(5, 1, '2020-07-01 04:39:00', 53, 563, '[{\\\"questionNumber\\\":\\\"1\\\",\\\"questionText\\\":\\\"ktfiytu\\\"},{\\\"questionNumber\\\":\\\"2\\\",\\\"questionText\\\":\\\"yuytiuyti\\\"},{\\\"questionNumber\\\":\\\"3\\\",\\\"questionText\\\":\\\"tyutryeurtu\\\"}]', 0),
-(6, 1, '2020-07-23 05:56:00', 5, 10, '[{\\\"questionNumber\\\":\\\"1\\\",\\\"questionText\\\":\\\"Just checking\\\"},{\\\"questionNumber\\\":\\\"2\\\",\\\"questionText\\\":\\\"These are all the values that will be added\\\"}]', 0),
-(7, 1, '2020-07-24 06:05:00', 20, 200, '[{\\\"questionNumber\\\":\\\"1\\\",\\\"questionText\\\":\\\"Whatever the question is\\\"},{\\\"questionNumber\\\":\\\"2\\\",\\\"questionText\\\":\\\"write the data into it\\\"}]', 0);
+(6, 1, '2020-07-27 13:01:00', 90, 60, '[[{\\\"questionNumber\\\":\\\"1\\\",\\\"questionText\\\":\\\"sdfgsdhf djkfhg  hkfdhgk sdlgjhfdkg ?\\\",\\\"image\\\":\\\"\\\"},{\\\"questionNumber\\\":\\\"2\\\",\\\"questionText\\\":\\\"dfgdfghfghj fhg fdgjhf fhy fg\\\",\\\"image\\\":\\\"QImages/97d7967477c6591b4d222156d358fe18.png\\\"}],[{\\\"questionNumber\\\":\\\"3\\\",\\\"questionText\\\":\\\"fdhgfdhjgfk  gfhkhj mloi\\\",\\\"image\\\":\\\"\\\"},{\\\"questionNumber\\\":\\\"4\\\",\\\"questionText\\\":\\\"dgfv fdg fghgfj hghgjkhg ?\\\",\\\"image\\\":\\\"QImages/7e904fdab7ef5ada3285a9a797944a2e.png\\\"}],[{\\\"questionNumber\\\":\\\"5\\\",\\\"questionText\\\":\\\"fvhfg jgfhjgh hgjhg lgyhkiy kiuy ?\\\",\\\"image\\\":\\\"\\\"},{\\\"questionNumber\\\":\\\"6\\\",\\\"questionText\\\":\\\"xcgbxd fgfjgh hgjgh kgfhj gf?\\\",\\\"image\\\":\\\"QImages/489d749658636bbab7a31a0f95857ea3.png\\\"}]]', 0);
 
 -- --------------------------------------------------------
 
@@ -79,30 +73,37 @@ INSERT INTO `faculty_papers` (`paper_ID`, `faculty_ID`, `paper-due`, `paper_dura
 --
 
 CREATE TABLE `student_list` (
-  `student_id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `password` varchar(30) NOT NULL
+  `student_ID` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `student_list`
 --
 
-INSERT INTO `student_list` (`student_id`, `name`, `email`, `password`) VALUES
-(1, 'Test User', 'test@user.com', 'testing'),
-(2, 'Pranav', 'test2@user.com', 'testing2');
+INSERT INTO `student_list` (`student_ID`, `name`, `email`, `password`) VALUES
+(1, 'pman', 'pman@amb.com', 'test'),
+(2, 'p2', 'p2@abc.com', 'testest');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student_papers`
+--
+
+CREATE TABLE `student_papers` (
+  `student_ID` int(11) NOT NULL,
+  `paper_ID` int(11) NOT NULL,
+  `paper_URL` varchar(255) DEFAULT NULL,
+  `start_time` datetime NOT NULL,
+  `unique_submission_ID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `faculty_list`
---
-ALTER TABLE `faculty_list`
-  ADD PRIMARY KEY (`faculty_id`),
-  ADD UNIQUE KEY `emailid` (`emailid`);
 
 --
 -- Indexes for table `faculty_papers`
@@ -114,30 +115,35 @@ ALTER TABLE `faculty_papers`
 -- Indexes for table `student_list`
 --
 ALTER TABLE `student_list`
-  ADD PRIMARY KEY (`student_id`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`student_ID`);
+
+--
+-- Indexes for table `student_papers`
+--
+ALTER TABLE `student_papers`
+  ADD PRIMARY KEY (`unique_submission_ID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `faculty_list`
---
-ALTER TABLE `faculty_list`
-  MODIFY `faculty_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT for table `faculty_papers`
 --
 ALTER TABLE `faculty_papers`
-  MODIFY `paper_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'A unique ID assigned to the paper', AUTO_INCREMENT=8;
+  MODIFY `paper_ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'A unique ID assigned to the paper', AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `student_list`
 --
 ALTER TABLE `student_list`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `student_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `student_papers`
+--
+ALTER TABLE `student_papers`
+  MODIFY `unique_submission_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
