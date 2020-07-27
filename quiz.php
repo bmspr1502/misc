@@ -12,6 +12,11 @@ if(!(isset($_SESSION["auth"]) && isset($_SESSION["user_type"]) && isset($_SESSIO
     die();
 } 
 
+setcookie("auth",$_SESSION["auth"]);
+setcookie("user_type",$_SESSION["user_type"]);
+setcookie("user_ID",$_SESSION["user_ID"]);
+setcookie("paper_ID",$id);
+
 include 'DB.php';
 
 
@@ -152,8 +157,52 @@ $questions = json_decode(stripslashes($questions));
         <script type="text/javascript">
 
             var isStart = false;
+            var unique_submission_ID;
+            var unique_submission_URL;
 
             var isValidFileUploaded = false;
+
+            function make_final_submission(){
+                console.log(isStart,minutes,unique_submission_ID,unique_submission_URL);
+                if(isStart && minutes >= 0 && unique_submission_ID && unique_submission_URL){
+                    if(minutes==0 && seconds <= 0){
+                        window.location.replace("user_time_up.php");
+                        return;
+                    }
+                    var flag = true;
+
+                    $.ajaxSetup({async: false});
+                    $.ajax({
+                        url: "finish_test.php",
+                        type: "POST",
+                        data: {"submission_ID":unique_submission_ID,"paper_URL":unique_submission_URL},
+                        success: function(response) {
+                            if(response === "error"){
+                                alert("Error starting exam");
+                                flag = false;
+                                return;
+                            } else {
+                                if(response === "success"){
+                                    alert("submission successfull");
+                                }
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorMessage) {
+                            alert("Error starting exam.");
+                            flag = false;
+                            return; 
+                        }
+                    });
+
+                    if(!flag){
+                        alert("Error making submission");
+                    }
+                    
+                } else {
+                    console.log("making final sub failed");
+                }
+            }
+
             function loadFile(event){
                 var sub_button = $("#the_button");
                 if(event.target.files[0].type != "application/pdf"){
@@ -172,11 +221,46 @@ $questions = json_decode(stripslashes($questions));
             }
 
             function answer_button(){
+                if(!isStart){
+                    alert("You haven't started the test");
+                    return;
+                }
                 if(!isValidFileUploaded){
                     $("#file").click();
                 } else {
-                    if(minutes > 0){
-                        $("#answer_form").submit();
+                    if(minutes >= 0){
+                        if(minutes==0 && seconds <= 0){
+                            window.location.replace("user_time_up.php");
+                            return;
+                        }
+                        var blobFile = $('#file')[0].files[0];
+                        var formData = new FormData();
+                        formData.append("file", blobFile);
+
+
+                        $.ajaxSetup({async: false});
+                        $.ajax({
+                            url: "submit_answer.php",
+                            type: "POST",
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            success: function(response) {
+                                if(response === "typeerror"){
+                                    alert("Please upload a PDF only.")
+                                } else if(response === "uploaderror"){
+                                    alert("There was an error uploading your file. Please try later");
+                                } else {
+                                    unique_submission_URL = response;
+                                    console.log("saved pdf to server");
+                                    make_final_submission();
+                                }
+                            },
+                            error: function(jqXHR, textStatus, errorMessage) {
+                                alert("Error uploading file. Please try later"); 
+                            }
+                        });
+
                     } else {
                         window.location.replace("user_time_up.php");
                     }
@@ -264,12 +348,77 @@ $questions = json_decode(stripslashes($questions));
             }
 
             function timer() {
+                if(isStart){
+                    alert("The exam has already been started");
+                    return; 
+                }
+                var flag = true;
+
+                $.ajaxSetup({async: false});
+                $.ajax({
+                    url: "start_test.php",
+                    type: "POST",
+                    data: {"user_ID":getCookie("user_ID"),"paper_ID":getCookie("paper_ID")},
+                    success: function(response) {
+                        if(response === "error"){
+                            alert("Error starting exam");
+                            flag = false;
+                            return;
+                        } else if(response === "alreadyexists" && isStart){
+                            alert("Exam has already begun");
+                            flag = false;
+                            return;
+                        } else {
+                            unique_submission_ID = parseInt(response);
+                            if(!unique_submission_ID){
+                                alert("Sorry, you have already made a submission");
+                                flag = false;
+                                return;
+                            }
+                            console.log(unique_submission_ID);
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorMessage) {
+                        alert("Error starting exam.");
+                        flag = false;
+                        return; 
+                    }
+                });
+
+                //at this point we have a unique ID that indetifies this submission,
+                // use this id when entering the URL in the database
+                // URL is obatined from the answer_button function
+
+                if(!flag){
+                    return
+                }
+
                 add();
                 if(isStart){
                     section(sections[currentSection]);
                 }
                 t = setInterval(add, 1000);
             } 
+
+            function getCookie(name) {
+                // Split cookie string and get all individual name=value pairs in an array
+                var cookieArr = document.cookie.split(";");
+                
+                // Loop through the array elements
+                for(var i = 0; i < cookieArr.length; i++) {
+                    var cookiePair = cookieArr[i].split("=");
+                    
+                    /* Removing whitespace at the beginning of the cookie name
+                    and compare it with the given string */
+                    if(name == cookiePair[0].trim()) {
+                        // Decode the cookie value and return
+                        return decodeURIComponent(cookiePair[1]);
+                    }
+                }
+                
+                // Return null if not found
+                return null;
+            }
         </script>
 
     </body>
